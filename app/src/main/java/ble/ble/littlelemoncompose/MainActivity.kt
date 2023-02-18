@@ -1,104 +1,93 @@
-package ble.ble.littlelemoncompose
+package com.littlelemon.menu
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import ble.ble.littlelemoncompose.ui.theme.LittleLemonComposeTheme
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.core.view.MenuCompat
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 
 class MainActivity : ComponentActivity() {
+
+    val productsList = mutableListOf(
+        ProductItem("Black tea", 3.00, "Drinks", R.drawable.black_tea),
+        ProductItem("Green tea", 3.00, "Drinks", R.drawable.green_tea),
+        ProductItem("Espresso", 5.00, "Drinks", R.drawable.espresso),
+        ProductItem("Cappuccino", 8.00, "Drinks", R.drawable.cappuccino),
+        ProductItem("Latte", 8.00, "Drinks", R.drawable.latte),
+        ProductItem("Mocha", 10.00, "Drinks", R.drawable.mocha),
+        ProductItem("Boeuf bourguignon", 15.00, "Food", R.drawable.boeuf_bourguignon),
+        ProductItem("Bouillabaisse", 20.00, "Food", R.drawable.bouillabaisse),
+        ProductItem("Lasagna", 15.00, "Food", R.drawable.lasagna),
+        ProductItem("Onion soup", 12.00, "Food", R.drawable.onion_soup),
+        ProductItem("Salmon en papillote", 25.00, "Food", R.drawable.salmon_en_papillote),
+        ProductItem("Quiche Lorraine", 17.00, "Dessert", R.drawable.quiche_lorraine),
+        ProductItem("Custard tart", 14.00, "Dessert", R.drawable.custard_tart),
+        ProductItem("Croissant", 7.00, "Dessert", R.drawable.croissant),
+    )
+
+    private val productsState: MutableStateFlow<Products> =
+        MutableStateFlow(Products(productsList))
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-           LittleLemonComposeTheme {
-               Surface(
-                   modifier = Modifier.fillMaxSize(),
-                   color = MaterialTheme.colors.background
-               ){
-                   MainComponent()
-               }
-           }
-        }
+        setContent { InitUI() }
     }
-}
 
-
-@Composable
-fun MainComponent(){
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(Color(0xFF495E57)),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
-    ){
-        Text(
-            text = stringResource(id = R.string.title),
-            fontSize = 32.sp,
-            color = Color(0XFFF4CE14),
-            modifier = Modifier.padding(start = 20.dp, top = 20.dp)
-        )
-        Text(
-            text = stringResource(id = R.string.chicago),
-            fontSize = 32.sp,
-            color = Color(0XFFFFFFFF),
-            modifier = Modifier.padding(start = 20.dp)
-        )
-
-        Row(
-            Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-
-            Text(
-                text = stringResource(id = R.string.description)
-            )
-            Image(
-                painter = painterResource(id = R.drawable.lemon),
-                contentDescription = "",
-                Modifier.height(100.dp)
-            )
-        }
-        Button(onClick = { /*TODO*/ },
-            border = BorderStroke(1.dp, Color.Red),
-            shape = RoundedCornerShape(10.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFFF4CE14))
-        ) {
-            Text(text = stringResource(id = R.string.order)
-                ,fontSize = 32.sp)
-        }
+    @Composable
+    fun InitUI() {
+        val products by productsState.collectAsState()
+        ProductsGrid(products = products)
     }
-}
-//@Composable
-//fun RestaurantName(name: String, size: Int){
-//    Text(
-//        text = name,
-//        fontSize = size.sp
-//    )
-//}
-//
 
+    private fun startProductActivity(productItem: ProductItem) {
+        //TODO instantiate intent and pass extra parameter from product
+    }
 
-@Preview(showBackground = true)
-@Composable
-fun MainComponentPreview() {
-    LittleLemonComposeTheme {
-        MainComponent()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.products_menu, menu)
+        MenuCompat.setGroupDividerEnabled(menu, true)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.groupId == R.id.sorting) {
+            val type = when (item.itemId) {
+                R.id.sort_a_z -> SortType.Alphabetically
+                R.id.sort_price_asc -> SortType.PriceAsc
+                R.id.sort_price_desc -> SortType.PriceDesc
+                else -> SortType.Alphabetically
+            }
+            productsState.update {
+                Products(
+                    SortHelper().sortProducts(
+                        type,
+                        productsList
+                    )
+                )
+            }
+        } else if (item.groupId == R.id.filter) {
+            val type = when (item.itemId) {
+                R.id.filter_all -> FilterType.All
+                R.id.filter_drinks -> FilterType.Drinks
+                R.id.filter_food -> FilterType.Food
+                R.id.filter_dessert -> FilterType.Dessert
+                else -> FilterType.All
+            }
+            productsState.update {
+                Products(
+                    FilterHelper().filterProducts(
+                        type,
+                        productsList
+                    )
+                )
+            }
+        }
+        return true
     }
 }

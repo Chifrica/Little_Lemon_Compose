@@ -1,4 +1,4 @@
-package ble.ble.littlelemoncompose.ui.theme
+package ble.ble.littlelemoncompose.menu.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

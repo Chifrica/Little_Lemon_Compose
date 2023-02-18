@@ -1,5 +1,6 @@
 package ble.ble.littlelemoncompose
 
+import ble.ble.littlelemoncompose.menu.Product
 import org.junit.Assert.*
 import org.junit.Test
 

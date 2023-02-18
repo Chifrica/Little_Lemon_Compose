@@ -1,5 +1,6 @@
-package com.littlelemon.menu
+package ble.ble.littlelemoncompose
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,27 +10,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.view.MenuCompat
+import ble.ble.littlelemoncompose.filter.FilterHelper
+import ble.ble.littlelemoncompose.filter.FilterType
+import ble.ble.littlelemoncompose.menu.ProductActivity
+import ble.ble.littlelemoncompose.menu.ProductActivity.Companion.KEY_CATEGORY
+import ble.ble.littlelemoncompose.menu.ProductActivity.Companion.KEY_IMAGE
+import ble.ble.littlelemoncompose.menu.ProductActivity.Companion.KEY_PRICE
+import ble.ble.littlelemoncompose.menu.ProductActivity.Companion.KEY_TITLE
+import ble.ble.littlelemoncompose.menu.ProductItem
+import ble.ble.littlelemoncompose.menu.Products
+import ble.ble.littlelemoncompose.menu.ProductsGrid
+import ble.ble.littlelemoncompose.menu.ProductsWarehouse.productsList
+import ble.ble.littlelemoncompose.sort.SortHelper
+import ble.ble.littlelemoncompose.sort.SortType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
 class MainActivity : ComponentActivity() {
-
-    val productsList = mutableListOf(
-        ProductItem("Black tea", 3.00, "Drinks", R.drawable.black_tea),
-        ProductItem("Green tea", 3.00, "Drinks", R.drawable.green_tea),
-        ProductItem("Espresso", 5.00, "Drinks", R.drawable.espresso),
-        ProductItem("Cappuccino", 8.00, "Drinks", R.drawable.cappuccino),
-        ProductItem("Latte", 8.00, "Drinks", R.drawable.latte),
-        ProductItem("Mocha", 10.00, "Drinks", R.drawable.mocha),
-        ProductItem("Boeuf bourguignon", 15.00, "Food", R.drawable.boeuf_bourguignon),
-        ProductItem("Bouillabaisse", 20.00, "Food", R.drawable.bouillabaisse),
-        ProductItem("Lasagna", 15.00, "Food", R.drawable.lasagna),
-        ProductItem("Onion soup", 12.00, "Food", R.drawable.onion_soup),
-        ProductItem("Salmon en papillote", 25.00, "Food", R.drawable.salmon_en_papillote),
-        ProductItem("Quiche Lorraine", 17.00, "Dessert", R.drawable.quiche_lorraine),
-        ProductItem("Custard tart", 14.00, "Dessert", R.drawable.custard_tart),
-        ProductItem("Croissant", 7.00, "Dessert", R.drawable.croissant),
-    )
 
     private val productsState: MutableStateFlow<Products> =
         MutableStateFlow(Products(productsList))
@@ -42,16 +39,24 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun InitUI() {
         val products by productsState.collectAsState()
-        ProductsGrid(products = products)
+        // AM not sure of what i put down
+        ProductsGrid(products = products, startProductActivity = this::startProductActivity)
     }
 
     private fun startProductActivity(productItem: ProductItem) {
         //TODO instantiate intent and pass extra parameter from product
+        val intent = Intent(this, ProductActivity::class.java)
+        intent.putExtra(KEY_TITLE, productItem.title)
+        intent.putExtra(KEY_PRICE, productItem.price)
+        intent.putExtra(KEY_IMAGE, productItem.image)
+        intent.putExtra(KEY_CATEGORY, productItem.category)
+        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.products_menu, menu)
-        MenuCompat.setGroupDividerEnabled(menu, true)
+        //In the menu parameter below i added non-null asserted in replace of menu
+        MenuCompat.setGroupDividerEnabled(menu!!, true)
         return true
     }
 

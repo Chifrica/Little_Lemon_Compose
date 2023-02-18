@@ -1,25 +1,21 @@
-package ble.ble.littlelemoncompose.ui.theme
+package ble.ble.littlelemoncompose.menu.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import ble.ble.littlelemoncompose.ui.theme.LittleLemoncolor.charcoal
-import ble.ble.littlelemoncompose.ui.theme.LittleLemoncolor.cloud
-import ble.ble.littlelemoncompose.ui.theme.LittleLemoncolor.pink
-import ble.ble.littlelemoncompose.ui.theme.LittleLemoncolor.yellow
 
 private val DarkColorPalette = darkColors(
-    primary = pink,
-    primaryVariant = charcoal,
-    secondary = cloud
+    primary = Purple200,
+    primaryVariant = Purple700,
+    secondary = Teal200
 )
 
 private val LightColorPalette = lightColors(
-    primary = yellow,
-    primaryVariant = charcoal,
-    secondary = cloud
+    primary = Purple500,
+    primaryVariant = Purple700,
+    secondary = Teal200
 
     /* Other default colors to override
     background = Color.White,
@@ -32,7 +28,7 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun LittleLemonComposeTheme(
+fun LittleLemonMenuTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -44,7 +40,7 @@ fun LittleLemonComposeTheme(
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+        typography = MaterialTheme.typography,
         shapes = Shapes,
         content = content
     )

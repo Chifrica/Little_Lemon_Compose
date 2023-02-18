@@ -1,4 +1,4 @@
-package com.littlelemon.menu
+package ble.ble.littlelemoncompose.filter
 
 sealed class FilterType {
     object All : FilterType()

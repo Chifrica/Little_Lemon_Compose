@@ -1,4 +1,4 @@
-package com.littlelemon.menu
+package ble.ble.littlelemoncompose.menu
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

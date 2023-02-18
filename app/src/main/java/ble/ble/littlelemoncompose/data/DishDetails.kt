@@ -1,7 +1,6 @@
-package ble.ble.littlelemoncompose
+package ble.ble.littlelemoncompose.data
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -16,6 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ble.ble.littlelemoncompose.R
+import ble.ble.littlelemoncompose.util.TopAppBar
 
 @Composable
 fun DishDetails(id: Int){

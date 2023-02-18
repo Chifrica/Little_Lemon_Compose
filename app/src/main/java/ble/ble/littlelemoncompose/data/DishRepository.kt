@@ -1,6 +1,7 @@
-package ble.ble.littlelemoncompose
+package ble.ble.littlelemoncompose.data
 
 import androidx.annotation.DrawableRes
+import ble.ble.littlelemoncompose.R
 
 object DishRepository {
     val dishes = listOf(

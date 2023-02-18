@@ -1,4 +1,4 @@
-package ble.ble.littlelemoncompose
+package ble.ble.littlelemoncompose.data
 
 
 interface Destinations {

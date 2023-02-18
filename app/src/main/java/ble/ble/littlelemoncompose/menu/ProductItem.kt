@@ -1,11 +1,11 @@
-package com.littlelemon.menu
+package ble.ble.littlelemoncompose.menu
 
 import androidx.annotation.DrawableRes
 
 data class ProductItem(
     val title: String,
     val price: Double,
-    val category: String,
+    val category: String?,
     @DrawableRes val image: Int
 )
 

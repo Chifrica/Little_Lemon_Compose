@@ -1,4 +1,4 @@
-package ble.ble.littlelemoncompose
+package ble.ble.littlelemoncompose.util
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ble.ble.littlelemoncompose.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

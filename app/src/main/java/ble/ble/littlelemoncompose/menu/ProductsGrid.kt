@@ -1,4 +1,4 @@
-package com.littlelemon.menu
+package ble.ble.littlelemoncompose.menu
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -7,9 +7,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,12 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import kotlin.reflect.KFunction1
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProductsGrid(products: Products) {
+fun ProductsGrid(products: Products, startProductActivity: (ProductItem) -> Unit) {
     LazyVerticalGrid(
-        cells = GridCells.Fixed(count = 2),
+        //I used columns in replace of cells
+        columns = GridCells.Fixed(count = 2),
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -40,6 +42,7 @@ fun ProductsGrid(products: Products) {
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.clickable {
                             //TODO start ProductActivity and pass the productItem details
+                            ProductActivity()
                         }
                     )
                     Text(text = productItem.title)

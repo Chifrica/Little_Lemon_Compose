@@ -1,4 +1,4 @@
-package ble.ble.littlelemoncompose
+package ble.ble.littlelemoncompose.util
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -8,6 +8,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -16,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ble.ble.littlelemoncompose.ui.theme.LittleLemoncolor
+import ble.ble.littlelemoncompose.R
 
 @Composable
 fun UpperPanel() {
@@ -28,18 +29,18 @@ fun UpperPanel() {
                 top = 16.dp,
                 bottom = 16.dp
             )
-            .background(LittleLemoncolor.green)
+            .background(Color(0xFF1E4034))
     ) {
         Text(
             text = stringResource(id = R.string.title),
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
-            color = LittleLemoncolor.yellow
+            color = Color(0xFFF5FA13)
         )
         Text(
             text = stringResource(id = R.string.location),
             fontSize = 24.sp,
-            color = LittleLemoncolor.cloud
+            color = Color(0xFFF4FAFC)
         )
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -49,7 +50,7 @@ fun UpperPanel() {
             Text(
                 text = stringResource(id = R.string.description),
                 style = MaterialTheme.typography.body1,
-                color = LittleLemoncolor.cloud,
+                color = Color(0xFFF4FAFC),
                 modifier = Modifier
                     .padding(bottom = 28.dp, end = 20.dp)
                     .fillMaxWidth(0.6f)
@@ -61,7 +62,9 @@ fun UpperPanel() {
             )
         }
         Button(
-            onClick = { }
+            onClick = { },
+            modifier = Modifier
+                .background(Color(0xFFF5FA13))
         ) {
             Text(
                 text = stringResource(id = R.string.order_button_text)

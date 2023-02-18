@@ -1,4 +1,4 @@
-package com.littlelemon.menu
+package ble.ble.littlelemoncompose.sort
 
 sealed class SortType {
     object Alphabetically : SortType()
